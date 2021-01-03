@@ -8,6 +8,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -15,7 +16,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         Set<String> phoneSet = new HashSet<>();
 
-        System.out.println("Please enter the String containing \n multiple phone numbers in arbitrary format:");
+        System.out.print("Please enter the String containing \n multiple phone numbers in arbitrary format:");
         String userInput=sc.nextLine();
 
 
@@ -26,9 +27,13 @@ public class Main {
 
 
         while (matcher.find()) {
-            System.out.println();
-            phoneSet.add("+38"+matcher.group(1));
+            phoneSet.add(matcher.group(1));
         }
+
+        phoneSet = phoneSet.stream()
+                .map(s->"+38"+s)
+                .collect(Collectors.toSet());
+
 
 
         System.out.printf("You entered %d  unique numbers:\n", phoneSet.size());
